@@ -1,5 +1,5 @@
 //
-//  Matrix3x3.cpp
+//  Matrix4x3.cpp
 //  3D Math
 //
 //  Created by 梅宇宸 on 16/9/30.
@@ -8,9 +8,27 @@
 
 #include "3DMath.h"
 
-Matrix3x3 operator * (const Matrix3x3 &a, const Matrix3x3 &b)
+void Matrix4x3::zeroTranslation ()
 {
-    Matrix3x3 r;
+    tx = ty = tz = 0;
+}
+
+void Matrix4x3::setTranslation (const Vector3 &d)
+{
+    tx = d.x;   ty = d.y;   tz = d.y;
+}
+
+void Matrix4x3::setupTranslation (const Vector3 &d)
+{
+    m11 = 1.0f; m12 = 0.0f; m13 = 0.0f;
+    m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+    m21 = 0.0f; m32 = 0.0f; m33 = 1.0f;
+    tx = d.x;   ty = d.y;   tz = d.z;
+}
+
+Matrix4x3 operator * (const Matrix4x3 &a, const Matrix4x3 &b)
+{
+    Matrix4x3 r;
     
     r.m11 = a.m11 * b.m11 + a.m12 * b.m21 + a.m13 * b.m31;
     r.m12 = a.m11 * b.m12 + a.m12 * b.m22 + a.m13 * b.m32;
@@ -24,11 +42,15 @@ Matrix3x3 operator * (const Matrix3x3 &a, const Matrix3x3 &b)
     r.m32 = a.m31 * b.m12 + a.m32 * b.m22 + a.m33 * b.m32;
     r.m33 = a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33;
     
+    r.tx = a.tx * b.m11 + a.ty * b.m21 + a.tz * b.m31 + b.tx;
+    r.ty = a.tx * b.m12 + a.ty * b.m22 + a.tz * b.m32 + b.ty;
+    r.tz = a.tx * b.m13 + a.ty * b.m23 + a.tz * b.m33 + b.tz;
+    
     return r;
 }
 
 
-Vector3 operator * (const Vector3 &v, const Matrix3x3 &m)
+Vector3 operator * (const Vector3 &v, const Matrix4x3 &m)
 {
     return Vector3 (
         v.x * m.m11 + v.y * m.m21 + v.z * m.m31,
@@ -37,21 +59,21 @@ Vector3 operator * (const Vector3 &v, const Matrix3x3 &m)
     );
 }
 
-Matrix3x3 &operator *= (Matrix3x3 &a, const Matrix3x3 &b)
+Matrix4x3 &operator *= (Matrix4x3 &a, const Matrix4x3 &b)
 {
     a = a * b;
     
     return a;
 }
 
-Vector3 &operator *= (Vector3 &v, const Matrix3x3 &m)
+Vector3 &operator *= (Vector3 &v, const Matrix4x3 &m)
 {
     v = v * m;
     
     return v;
 }
 
-void Matrix3x3::setRotate(int axis, float theta)
+void Matrix4x3::setRotate(int axis, float theta)
 {
     float sin, cos;
     
@@ -78,24 +100,30 @@ void Matrix3x3::setRotate(int axis, float theta)
             assert(false);
             break;
     }
+    
+    tx = ty = tz = 0.0f;
 }
 
-void Matrix3x3::setScale (const float kx, const float ky, const float kz)
+void Matrix4x3::setScale (const float kx, const float ky, const float kz)
 {
     m11 = kx;   m12 = 0.0f; m13 = 0.0f;
     m21 = 0.0f; m22 = ky;   m23 = 0.0f;
     m31 = 0.0f; m32 = 0.0f; m33 = kz;
+    
+    tx = ty = tz = 0.0f;
 }
 
-void Matrix3x3::setScale (const Vector3 &v)
+void Matrix4x3::setScale (const Vector3 &v)
 {
     m11 = v.x;  m12 = 0.0f; m13 = 0.0f;
     m21 = 0.0f; m22 = v.y;  m23 = 0.0f;
     m31 = 0.0f; m32 = 0.0f; m33 = v.z;
+    
+    tx = ty = tz = 0.0f;
 }
 
 
-void Matrix3x3::setProject (const Vector3 &v)
+void Matrix4x3::setProject (const Vector3 &v)
 {
     // make sure v is an unit vector
     assert (fabs(v * v - 1.0f) < 0.001f);
@@ -107,34 +135,45 @@ void Matrix3x3::setProject (const Vector3 &v)
     m12 = m21 = -v.x * v.y;
     m13 = m31 = -v.x * v.z;
     m23 = m32 = -v.y * v.z;
+    
+    tz = ty = tz = 0.0f;
 }
 
-void Matrix3x3::setReflect (int axis)
+void Matrix4x3::setReflect (int axis, float k)
 {
     switch (axis)
     {
-        case 1: // x axis
+        case 1: // x = k surface
             m11 = -1.0f;    m12 = 0.0f;     m13 = 0.0f;
             m21 = 0.0f;     m22 = 1.0f;     m23 = 0.0f;
             m31 = 0.0f;     m32 = 0.0f;     m33 = 1.0f;
+            
+            tx = 2.0f * k;  ty = 0.0f;      tz = 0.0f;
             break;
-        case 2: // y axis
+            
+        case 2: // y = k surface
             m11 = 1.0f;     m12 = 0.0f;     m13 = 0.0f;
             m21 = 0.0f;     m22 = -1.0f;    m23 = 0.0f;
             m31 = 0.0f;     m32 = 0.0f;     m33 = 1.0f;
+            
+            tx = 0.0f;      ty = 2.0f * k;  tz = 0.0f;
             break;
-        case 3: // z axis
+            
+        case 3: // z = k surface
             m11 = 1.0f;     m12 = 0.0f;     m13 = 0.0f;
             m21 = 0.0f;     m22 = 1.0f;     m23 = 0.0f;
             m31 = 0.0f;     m32 = 0.0f;     m33 = -1.0f;
+            
+            tx = 0.0f;      ty = 0.0f;      tz = 2.0f * k;
             break;
+            
         default:
             assert(false);
             break;
     }
 }
 
-void Matrix3x3::setReflect (const Vector3 &n)
+void Matrix4x3::setReflect (const Vector3 &n)
 {
     assert(fabs(n * n - 1.0f) < 0.01f);
     
@@ -149,9 +188,11 @@ void Matrix3x3::setReflect (const Vector3 &n)
     m12 = m21 = ax * n.y;
     m13 = m31 = ax * n.z;
     m23 = m32 = ay * n.z;
+    
+    tx = ty = tz = 0.0f;
 }
 
-void Matrix3x3::setShear (int axis, float s, float t)
+void Matrix4x3::setShear (int axis, float s, float t)
 {
     switch (axis)
     {
@@ -174,16 +215,18 @@ void Matrix3x3::setShear (int axis, float s, float t)
             assert(false);
             break;
     }
+    
+    tx = ty = tz = 0.0f;
 }
 
-float determinant(const Matrix3x3 &m)
+float determinant(const Matrix4x3 &m)
 {
     return m.m11 * (m.m22 * m.m33 - m.m23 * m.m32) +
            m.m12 * (m.m23 * m.m31 - m.m21 * m.m33) +
            m.m13 * (m.m21 * m.m32 - m.m22 * m.m31);
 }
 
-Matrix3x3 inverse(const Matrix3x3 &m)
+Matrix4x3 inverse(const Matrix4x3 &m)
 {
     float det = determinant (m);
     
@@ -191,7 +234,7 @@ Matrix3x3 inverse(const Matrix3x3 &m)
     
     float oneOverDet = 1.0f / det;
     
-    Matrix3x3 r;
+    Matrix4x3 r;
     
     r.m11 = (m.m22 * m.m33 - m.m23 * m.m32) * oneOverDet;
     r.m12 = (m.m13 * m.m32 - m.m12 * m.m33) * oneOverDet;
@@ -208,7 +251,12 @@ Matrix3x3 inverse(const Matrix3x3 &m)
     return r;
 }
 
-void Matrix3x3::print ()
+Vector3 getTranslation (const Matrix4x3 &m)
+{
+    return Vector3 (m.tx, m.ty, m.tz);
+}
+
+void Matrix4x3::print ()
 {
     std::cout << m11 << "\t" << m12 << "\t" << m13 << std::endl;
     std::cout << m21 << "\t" << m22 << "\t" << m23 << std::endl;

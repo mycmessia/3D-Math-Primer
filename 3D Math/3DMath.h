@@ -14,7 +14,7 @@
 
 #include "MathUtil.h"
 #include "Vector3.hpp"
-#include "Matrix3x3.hpp"
+#include "Matrix4x3.hpp"
 
 
 #endif /* _DMath_h */
