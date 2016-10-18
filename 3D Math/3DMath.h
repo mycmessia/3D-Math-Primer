@@ -16,5 +16,6 @@
 #include "Vector3.hpp"
 #include "Matrix4x3.hpp"
 #include "RotationMatrix.hpp"
+#include "EulerAngle.hpp"
 
 #endif /* _DMath_h */

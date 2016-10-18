@@ -10,13 +10,17 @@
 #define RotationMatrix_hpp
 
 #include <stdio.h>
-#include "Vector3.hpp"
+
+class Vector3;
+class EulerAngle;
 
 class RotationMatrix {
 public:
     float m11, m12, m13;
     float m21, m22, m23;
     float m31, m32, m33;
+    
+    void setup (const EulerAngle &e);
     
     void identity ();
     
