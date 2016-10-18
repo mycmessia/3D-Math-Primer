@@ -15,6 +15,6 @@
 #include "MathUtil.h"
 #include "Vector3.hpp"
 #include "Matrix4x3.hpp"
-
+#include "RotationMatrix.hpp"
 
 #endif /* _DMath_h */
