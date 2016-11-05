@@ -45,5 +45,7 @@ inline void sinCos (float *returnSin, float *returnCos, float theta)
     *returnCos = cos (theta);
 }
 
+extern float safeAcos (float x);
+
 
 #endif /* MathUtil_h */

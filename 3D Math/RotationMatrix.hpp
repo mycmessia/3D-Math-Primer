@@ -20,7 +20,7 @@ public:
     float m21, m22, m23;
     float m31, m32, m33;
     
-    void setup (const EulerAngle &e);
+    RotationMatrix (const EulerAngle &e);
     
     void identity ();
     

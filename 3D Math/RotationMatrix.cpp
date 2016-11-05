@@ -8,14 +8,7 @@
 
 #include "3DMath.h"
 
-void RotationMatrix::identity ()
-{
-    m11 = 1.0f; m11 = 0.0f; m13 = 0.0f;
-    m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
-    m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
-}
-
-void RotationMatrix::setup(const EulerAngle &e)
+RotationMatrix::RotationMatrix(const EulerAngle &e)
 {
     float sh, ch, sp, cp, sb, cb;
     
@@ -34,6 +27,13 @@ void RotationMatrix::setup(const EulerAngle &e)
     m31 = -sh * cb + ch * sp * sb;
     m32 = sb * sh + ch * sp * cb;
     m33 = ch * cp;
+}
+
+void RotationMatrix::identity ()
+{
+    m11 = 1.0f; m11 = 0.0f; m13 = 0.0f;
+    m21 = 0.0f; m22 = 1.0f; m23 = 0.0f;
+    m31 = 0.0f; m32 = 0.0f; m33 = 1.0f;
 }
 
 Vector3 RotationMatrix::inertial2Object (const Vector3 &v) const

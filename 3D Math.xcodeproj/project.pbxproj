@@ -13,6 +13,7 @@
 		09E0A8FC1DB5379000E51C00 /* RotationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09E0A8FA1DB5379000E51C00 /* RotationMatrix.cpp */; };
 		09E0A8FF1DB6AB5100E51C00 /* EulerAngle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09E0A8FD1DB6AB5100E51C00 /* EulerAngle.cpp */; };
 		09E0A9011DB6C0E500E51C00 /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09E0A9001DB6C0E500E51C00 /* MathUtil.cpp */; };
+		09E0A9041DB7D06400E51C00 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09E0A9021DB7D06400E51C00 /* Quaternion.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,8 @@
 		09E0A8FD1DB6AB5100E51C00 /* EulerAngle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EulerAngle.cpp; sourceTree = "<group>"; };
 		09E0A8FE1DB6AB5100E51C00 /* EulerAngle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EulerAngle.hpp; sourceTree = "<group>"; };
 		09E0A9001DB6C0E500E51C00 /* MathUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtil.cpp; sourceTree = "<group>"; };
+		09E0A9021DB7D06400E51C00 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
+		09E0A9031DB7D06400E51C00 /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Quaternion.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				09E0A8FB1DB5379000E51C00 /* RotationMatrix.hpp */,
 				09E0A8FD1DB6AB5100E51C00 /* EulerAngle.cpp */,
 				09E0A8FE1DB6AB5100E51C00 /* EulerAngle.hpp */,
+				09E0A9021DB7D06400E51C00 /* Quaternion.cpp */,
+				09E0A9031DB7D06400E51C00 /* Quaternion.hpp */,
 			);
 			path = "3D Math";
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 				0929B2101D91425A00F994F1 /* Vector3.cpp in Sources */,
 				09E0A9011DB6C0E500E51C00 /* MathUtil.cpp in Sources */,
 				0929B2081D913B6F00F994F1 /* main.cpp in Sources */,
+				09E0A9041DB7D06400E51C00 /* Quaternion.cpp in Sources */,
 				095A88341D9EF2AB0075D75A /* Matrix4x3.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

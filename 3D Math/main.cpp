@@ -10,9 +10,7 @@
 
 int main(int argc, const char * argv[])
 {
-    RotationMatrix m;
-    
-    m.setup(EulerAngle(30, 0, 0));
+    RotationMatrix m (EulerAngle(30, 0, 0));
     
 //    m.m11 = 0.866f; m.m12 = 0.0f;   m.m13 = -0.5f;
 //    m.m21 = 0.0f;   m.m22 = 1.0f;   m.m23 = 0.0f;

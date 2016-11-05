@@ -15,3 +15,17 @@ float wrapPi (float theta)
     theta -= kPi;
     return theta;
 }
+
+float safeAcos (float x)
+{
+    if (x < -1.0f)
+    {
+        return kPi;
+    }
+    else if (x > 1.0f)
+    {
+        return 0.0f;
+    }
+    
+    return acos (x);
+}
