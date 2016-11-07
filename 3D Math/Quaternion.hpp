@@ -27,8 +27,16 @@ public:
     
     float getRotationAngle () const;
     Vector3 getRotationAxis () const;
+    
+    Quaternion operator * (const Quaternion& a) const;
+    Quaternion& operator *= (const Quaternion& a);
+    
+    void normalize ();
 };
 
 extern const Quaternion kQuaternionIdentity;
+extern float dotProduct (const Quaternion& a, const Quaternion& b);
+extern Quaternion conjugate (const Quaternion& q);
+extern Quaternion pow (const Quaternion &q, float exponent);
 
 #endif /* Quaternion_hpp */

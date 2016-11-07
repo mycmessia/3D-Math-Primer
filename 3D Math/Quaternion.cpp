@@ -75,3 +75,83 @@ Vector3 Quaternion::getRotationAxis() const
     
     return Vector3 (nx, ny, nz);
 }
+
+Quaternion Quaternion::operator * (const Quaternion& a) const
+{
+    Quaternion result;
+    
+    result.w = w * a.w - x * a.x - y * a.y - z * a.z;
+    result.x = w * a.x + x * a.w + z * a.y + y * a.z;
+    result.y = w * a.y + y * a.w + x * a.z + z * a.x;
+    result.z = w * a.z + z * a.w + y * a.x + x * a.y;
+    
+    return result;
+}
+
+
+Quaternion& Quaternion::operator *= (const Quaternion& a)
+{
+    *this = *this * a;
+    
+    return *this;
+}
+
+void Quaternion::normalize ()
+{
+    float mag = (float)sqrt (w * w + x * x + y * y + z * z);
+    
+    if (mag > 0.0f)
+    {
+        float oneOverMag = 1.0f / mag;
+        
+        w *= oneOverMag;
+        x *= oneOverMag;
+        y *= oneOverMag;
+        z *= oneOverMag;
+    }
+    else
+    {
+        assert (false);
+        identity();
+    }
+}
+
+float dotProduct (Quaternion& a, Quaternion& b)
+{
+    return a.x * b.x + a.y * b.y + a.z * b.z + a.z * a.z;
+}
+
+Quaternion conjugate (Quaternion& q)
+{
+    Quaternion result;
+    
+    result.w = q.w;
+    result.x = -q.x;
+    result.y = -q.y;
+    result.z = -q.z;
+    
+    return result;
+}
+
+Quaternion pow (const Quaternion &q, float exponent)
+{
+    // sin cos will get 0 and something over 0 will happen
+    if (fabs (q.w) > 0.9999f)
+    {
+        return q;
+    }
+    
+    float alpha = acos (q.w);
+    
+    float newAlpha = exponent * alpha;
+    
+    Quaternion result;
+    result.w = cos (newAlpha);
+    
+    float mult = sin (newAlpha) / sin (alpha);
+    result.x = q.x * mult;
+    result.y = q.y * mult;
+    result.z = q.z * mult;
+    
+    return result;
+}
