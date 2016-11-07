@@ -6,9 +6,7 @@
 //  Copyright © 2016年 梅宇宸. All rights reserved.
 //
 
-#include "Quaternion.hpp"
-#include "MathUtil.h"
-#include <assert.h>
+#include "3DMath.h"
 
 
 const Quaternion kQuaternionIdentity = { 1.0F, 0.0F, 0.0F, 0.0F };
@@ -154,4 +152,79 @@ Quaternion pow (const Quaternion &q, float exponent)
     result.z = q.z * mult;
     
     return result;
+}
+
+void Quaternion::rotationMatrix2Quaternion (const RotationMatrix& rm)
+{
+    float m11 = rm.m11;
+    float m12 = rm.m12;
+    float m13 = rm.m13;
+    
+    float m21 = rm.m21;
+    float m22 = rm.m22;
+    float m23 = rm.m23;
+    
+    float m31 = rm.m31;
+    float m32 = rm.m32;
+    float m33 = rm.m33;
+    
+    float fourWSquareMinus1 = m11 + m22 + m33;
+    float fourXSquareMinus1 = m11 - m22 - m33;
+    float fourYSquareMinus1 = m22 - m11 - m33;
+    float fourZSquareMinus1 = m33 - m11 - m22;
+    
+    int maxIndex = 0;
+    float max = fourWSquareMinus1;
+    
+    if (fourXSquareMinus1 > max)
+    {
+        max = fourXSquareMinus1;
+        maxIndex = 1;
+    }
+    
+    if (fourYSquareMinus1 > max)
+    {
+        max = fourYSquareMinus1;
+        maxIndex = 2;
+    }
+    
+    if (fourZSquareMinus1 > max)
+    {
+        max = fourZSquareMinus1;
+        maxIndex = 3;
+    }
+    
+    max = sqrt (max + 1.0f) * 0.5f;
+    float mult = 0.25f / max;
+    
+    switch (maxIndex)
+    {
+        case 0:
+            w = max;
+            x = (m23 - m32) * mult;
+            y = (m31 - m13) * mult;
+            z = (m12 - m21) * mult;
+            break;
+        case 1:
+            x = max;
+            w = (m23 - m32) * mult;
+            y = (m12 + m21) * mult;
+            z = (m31 + m13) * mult;
+            break;
+        case 2:
+            y = max;
+            w = (m31 - m13) * mult;
+            x = (m12 + m21) * mult;
+            z = (m23 + m32) * mult;
+            break;
+        case 3:
+            z = max;
+            w = (m12 - m21) * mult;
+            x = (m31 + m13) * mult;
+            y = (m23 + m32) * mult;
+            z = (m23 + m32) * mult;
+            break;
+        default:
+            break;
+    }
 }

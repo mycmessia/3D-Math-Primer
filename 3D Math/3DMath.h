@@ -10,12 +10,13 @@
 #define _DMath_h
 
 #include <iostream>
-#include "assert.h"
+#include <assert.h>
 
 #include "MathUtil.h"
 #include "Vector3.hpp"
 #include "Matrix4x3.hpp"
 #include "RotationMatrix.hpp"
 #include "EulerAngle.hpp"
+#include "Quaternion.hpp"
 
 #endif /* _DMath_h */

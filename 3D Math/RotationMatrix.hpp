@@ -9,10 +9,9 @@
 #ifndef RotationMatrix_hpp
 #define RotationMatrix_hpp
 
-#include <stdio.h>
-
 class Vector3;
 class EulerAngle;
+class Quaternion;
 
 class RotationMatrix {
 public:
@@ -26,6 +25,9 @@ public:
     
     Vector3 inertial2Object (const Vector3 &v) const;
     Vector3 object2Inertial (const Vector3 &v) const;
+    
+    void inertial2ObjectQuaternion (const Quaternion& q);
+    void object2InertialQuaternion (const Quaternion& q);
 };
 
 #endif /* RotationMatrix_hpp */

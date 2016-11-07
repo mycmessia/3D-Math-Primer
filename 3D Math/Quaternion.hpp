@@ -9,7 +9,8 @@
 #ifndef Quaternion_hpp
 #define Quaternion_hpp
 
-#include "Vector3.hpp"
+class Vector3;
+class RotationMatrix;
 
 class Quaternion
 {
@@ -32,6 +33,8 @@ public:
     Quaternion& operator *= (const Quaternion& a);
     
     void normalize ();
+    
+    void rotationMatrix2Quaternion (const RotationMatrix& rm);
 };
 
 extern const Quaternion kQuaternionIdentity;
