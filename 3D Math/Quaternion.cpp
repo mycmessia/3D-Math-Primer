@@ -9,7 +9,43 @@
 #include "3DMath.h"
 
 
-const Quaternion kQuaternionIdentity = { 1.0F, 0.0F, 0.0F, 0.0F };
+const Quaternion kQuaternionIdentity = Quaternion (1.0F, 0.0F, 0.0F, 0.0F);
+
+Quaternion::Quaternion (float w, float x, float y, float z)
+{
+    this->w = w;
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
+Quaternion::Quaternion (const EulerAngle& orientation, TransType transType)
+{
+    float sp, sb, sh;
+    float cp, cb, ch;
+    sinCos (&sp, &cp, orientation.pitch * 0.5f);
+    sinCos (&sb, &cb, orientation.bank * 0.5f);
+    sinCos (&sh, &ch, orientation.heading * 0.5f);
+    
+    if (transType == object2inertial)
+    {
+        w = ch * cp * cb + sh * sp * sb;
+        x = ch * sp * cb + sh * cp * sb;
+        y = -ch * sp * sb + sh * cp * cb;
+        z = -sh * sp * cb + ch * cp * sb;
+    }
+    else if (transType == inertial2object)
+    {
+        w = ch * cp * cb + sh * sp * sb;
+        x = -ch * sp * cb - sh * cp * sb;
+        y = ch * sp * sb - sh * cp * cb;
+        z = sh * sp * cb - ch * cp * sb;
+    }
+    else
+    {
+        std::cout << "Invalid transType!" << std::endl;
+    }
+}
 
 void Quaternion::setRotationX (float theta)
 {
@@ -154,7 +190,7 @@ Quaternion pow (const Quaternion &q, float exponent)
     return result;
 }
 
-void Quaternion::rotationMatrix2Quaternion (const RotationMatrix& rm)
+Quaternion::Quaternion (const RotationMatrix& rm)
 {
     float m11 = rm.m11;
     float m12 = rm.m12;

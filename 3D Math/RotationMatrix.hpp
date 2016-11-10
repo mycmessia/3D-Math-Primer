@@ -20,14 +20,12 @@ public:
     float m31, m32, m33;
     
     RotationMatrix (const EulerAngle &e);
+    RotationMatrix (const Quaternion& q, TransType transType);
     
     void identity ();
     
     Vector3 inertial2Object (const Vector3 &v) const;
     Vector3 object2Inertial (const Vector3 &v) const;
-    
-    void inertial2ObjectQuaternion (const Quaternion& q);
-    void object2InertialQuaternion (const Quaternion& q);
 };
 
 #endif /* RotationMatrix_hpp */

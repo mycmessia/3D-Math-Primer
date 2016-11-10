@@ -9,13 +9,7 @@
 #ifndef EulerAngle_hpp
 #define EulerAngle_hpp
 
-#include <stdio.h>
 #include "3DMath.h"
-
-enum MatrixType {
-    object2world,
-    world2object
-};
 
 class EulerAngle
 {
@@ -26,11 +20,8 @@ public:
     float bank;     // z axis
     
     EulerAngle () {}
-    
-    EulerAngle (float h, float p, float b) :
-    heading (angle2radian(h)), pitch (angle2radian(p)), bank (angle2radian(b)) {}
-    
-    EulerAngle (const Matrix4x3 &m, MatrixType mt);
+    EulerAngle (float h, float p, float b) : heading (angle2radian(h)), pitch (angle2radian(p)), bank (angle2radian(b)) {}
+    EulerAngle (const Matrix4x3 &m, TransType mt);
     EulerAngle (const RotationMatrix &m);
     
     void canonize ();

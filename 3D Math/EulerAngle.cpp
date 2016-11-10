@@ -57,7 +57,7 @@ EulerAngle::EulerAngle (const RotationMatrix &m)
     }
 }
 
-EulerAngle::EulerAngle (const Matrix4x3 &m, MatrixType mt)
+EulerAngle::EulerAngle (const Matrix4x3 &m, TransType mt)
 {
     if (mt == object2world)
     {

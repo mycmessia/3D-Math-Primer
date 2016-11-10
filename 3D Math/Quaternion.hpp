@@ -18,7 +18,11 @@ public:
     
     float w, x, y, z;
     
-    void identity () { w = 1.0f; x = y = z = 0.0f; }
+    // constructors
+    Quaternion () {};
+    Quaternion (float w, float x, float y, float z);
+    Quaternion (const RotationMatrix& rm);
+    Quaternion (const EulerAngle& orientation, TransType transType);
     
     // rotate around x axis
     void setRotationX (float theta);
@@ -32,9 +36,8 @@ public:
     Quaternion operator * (const Quaternion& a) const;
     Quaternion& operator *= (const Quaternion& a);
     
+    void identity () { w = 1.0f; x = y = z = 0.0f; }
     void normalize ();
-    
-    void rotationMatrix2Quaternion (const RotationMatrix& rm);
 };
 
 extern const Quaternion kQuaternionIdentity;

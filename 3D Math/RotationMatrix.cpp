@@ -29,6 +29,42 @@ RotationMatrix::RotationMatrix(const EulerAngle &e)
     m33 = ch * cp;
 }
 
+RotationMatrix::RotationMatrix (const Quaternion& q, TransType transType)
+{
+    if (transType == inertial2object)
+    {
+        m11 = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
+        m12 = 2.0f * (q.x * q.y + q.w * q.z);
+        m13 = 2.0f * (q.x * q.z + q.w * q.y);
+        
+        m21 = 2.0f * (q.x * q.y - q.w * q.z);
+        m22 = 1.0f - 2.0f * (q.x * q.x + q.z * q.z);
+        m23 = 2.0f * (q.y * q.z + q.w * q.x);
+        
+        m31 = 2.0f * (q.x * q.z + q.w * q.y);
+        m32 = 2.0f * (q.y * q.z - q.w * q.x);
+        m33 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
+    }
+    else if (transType == object2inertial)
+    {
+        m11 = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
+        m12 = 2.0f * (q.x * q.y - q.w * q.z);
+        m13 = 2.0f * (q.x * q.z + q.w * q.y);
+        
+        m21 = 2.0f * (q.x * q.y + q.w * q.z);
+        m22 = 1.0f - 2.0f * (q.x * q.x + q.z * q.z);
+        m23 = 2.0f * (q.y * q.z - q.w * q.x);
+        
+        m31 = 2.0f * (q.x * q.z + q.w * q.y);
+        m32 = 2.0f * (q.y * q.z + q.w * q.x);
+        m33 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
+    }
+    else
+    {
+        std::cout << "Invalid transType!" << std::endl;
+    }
+}
+
 void RotationMatrix::identity ()
 {
     m11 = 1.0f; m11 = 0.0f; m13 = 0.0f;
@@ -52,34 +88,4 @@ Vector3 RotationMatrix::object2Inertial (const Vector3 &v) const
         m21 * v.x + m22 * v.y + m23 * v.z,
         m31 * v.x + m32 * v.y + m33 * v.z
     );
-}
-
-void RotationMatrix::inertial2ObjectQuaternion (const Quaternion &q)
-{
-    m11 = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
-    m12 = 2.0f * (q.x * q.y + q.w * q.z);
-    m13 = 2.0f * (q.x * q.z + q.w * q.y);
-    
-    m21 = 2.0f * (q.x * q.y - q.w * q.z);
-    m22 = 1.0f - 2.0f * (q.x * q.x + q.z * q.z);
-    m23 = 2.0f * (q.y * q.z + q.w * q.x);
-    
-    m31 = 2.0f * (q.x * q.z + q.w * q.y);
-    m32 = 2.0f * (q.y * q.z - q.w * q.x);
-    m33 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
-}
-
-void RotationMatrix::object2InertialQuaternion (const Quaternion &q)
-{
-    m11 = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
-    m12 = 2.0f * (q.x * q.y - q.w * q.z);
-    m13 = 2.0f * (q.x * q.z + q.w * q.y);
-    
-    m21 = 2.0f * (q.x * q.y + q.w * q.z);
-    m22 = 1.0f - 2.0f * (q.x * q.x + q.z * q.z);
-    m23 = 2.0f * (q.y * q.z - q.w * q.x);
-    
-    m31 = 2.0f * (q.x * q.z + q.w * q.y);
-    m32 = 2.0f * (q.y * q.z + q.w * q.x);
-    m33 = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
 }

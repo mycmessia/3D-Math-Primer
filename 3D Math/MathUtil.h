@@ -11,6 +11,13 @@
 
 #include <cmath>
 
+enum TransType {
+    object2world,
+    world2object,
+    object2inertial,
+    inertial2object
+};
+
 const float kPi = 3.14159265f;
 const float k2Pi = kPi * 2.0f;
 const float kPiOver2 = kPi * 0.5f;
