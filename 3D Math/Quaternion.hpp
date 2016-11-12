@@ -43,6 +43,7 @@ public:
 extern const Quaternion kQuaternionIdentity;
 extern float dotProduct (const Quaternion& a, const Quaternion& b);
 extern Quaternion conjugate (const Quaternion& q);
-extern Quaternion pow (const Quaternion &q, float exponent);
+extern Quaternion pow (const Quaternion& q, float exponent);
+extern Quaternion slerp (const Quaternion& q0, const Quaternion& q1, float t);
 
 #endif /* Quaternion_hpp */

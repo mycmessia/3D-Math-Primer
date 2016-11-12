@@ -21,8 +21,9 @@ public:
     
     EulerAngle () {}
     EulerAngle (float h, float p, float b) : heading (angle2radian(h)), pitch (angle2radian(p)), bank (angle2radian(b)) {}
-    EulerAngle (const Matrix4x3 &m, TransType mt);
+    EulerAngle (const Matrix4x3& m, TransType mt);
     EulerAngle (const RotationMatrix &m);
+    EulerAngle (const Quaternion& q, TransType mt);
     
     void canonize ();
 };
