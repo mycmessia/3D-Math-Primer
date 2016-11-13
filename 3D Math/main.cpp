@@ -8,6 +8,15 @@
 
 #include "3DMath.h"
 
+class line3D
+{
+public:
+    Vector3 origin;
+    Vector3 end;
+    
+    // other memebers
+};
+
 int main(int argc, const char * argv[])
 {
     RotationMatrix m (EulerAngle(30, 0, 0));
