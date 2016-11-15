@@ -17,6 +17,20 @@ public:
     // other memebers
 };
 
+class Ray3D
+{
+public:
+    Vector3 rayOrigin;
+    Vector3 rayDelta;
+};
+
+class Sphere
+{
+public:
+    Vector3 center;
+    float Radius;
+};
+
 int main(int argc, const char * argv[])
 {
     RotationMatrix m (EulerAngle(30, 0, 0));

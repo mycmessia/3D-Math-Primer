@@ -37,6 +37,7 @@
 		095A88331D9EF2AB0075D75A /* Matrix4x3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix4x3.hpp; sourceTree = "<group>"; };
 		095A88351D9FC1600075D75A /* 3DMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 3DMath.h; sourceTree = "<group>"; };
 		095A88361D9FC6180075D75A /* MathUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathUtil.h; sourceTree = "<group>"; };
+		095E3B2D1DDB9FE800A4B981 /* AABB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AABB.h; sourceTree = "<group>"; };
 		09E0A8FA1DB5379000E51C00 /* RotationMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RotationMatrix.cpp; sourceTree = "<group>"; };
 		09E0A8FB1DB5379000E51C00 /* RotationMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RotationMatrix.hpp; sourceTree = "<group>"; };
 		09E0A8FD1DB6AB5100E51C00 /* EulerAngle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EulerAngle.cpp; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 				09E0A8FE1DB6AB5100E51C00 /* EulerAngle.hpp */,
 				09E0A9021DB7D06400E51C00 /* Quaternion.cpp */,
 				09E0A9031DB7D06400E51C00 /* Quaternion.hpp */,
+				095E3B2D1DDB9FE800A4B981 /* AABB.h */,
 			);
 			path = "3D Math";
 			sourceTree = "<group>";
