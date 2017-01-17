@@ -8,6 +8,13 @@
 
 #include "3DMath.h"
 
+Matrix4x3::Matrix4x3 ()
+{
+    m11 = 0,  m12 = 0,   m13 = 0;
+    m21 = 0,  m22 = 0,   m23 = 0;
+    m31 = 0,  m32 = 0,   m33 = 0;
+}
+
 void Matrix4x3::zeroTranslation ()
 {
     tx = ty = tz = 0;
@@ -219,14 +226,14 @@ void Matrix4x3::setShear (int axis, float s, float t)
     tx = ty = tz = 0.0f;
 }
 
-float determinant(const Matrix4x3 &m)
+float determinant (const Matrix3x3 &m)
 {
     return m.m11 * (m.m22 * m.m33 - m.m23 * m.m32) +
            m.m12 * (m.m23 * m.m31 - m.m21 * m.m33) +
            m.m13 * (m.m21 * m.m32 - m.m22 * m.m31);
 }
 
-Matrix4x3 inverse(const Matrix4x3 &m)
+Matrix3x3 inverse (const Matrix3x3 &m)
 {
     float det = determinant (m);
     
@@ -234,7 +241,7 @@ Matrix4x3 inverse(const Matrix4x3 &m)
     
     float oneOverDet = 1.0f / det;
     
-    Matrix4x3 r;
+    Matrix3x3 r;
     
     r.m11 = (m.m22 * m.m33 - m.m23 * m.m32) * oneOverDet;
     r.m12 = (m.m13 * m.m32 - m.m12 * m.m33) * oneOverDet;
@@ -256,9 +263,16 @@ Vector3 getTranslation (const Matrix4x3 &m)
     return Vector3 (m.tx, m.ty, m.tz);
 }
 
-void Matrix4x3::print ()
+void Matrix3x3::print ()
 {
     std::cout << m11 << "\t" << m12 << "\t" << m13 << std::endl;
     std::cout << m21 << "\t" << m22 << "\t" << m23 << std::endl;
     std::cout << m31 << "\t" << m32 << "\t" << m33 << std::endl;
+}
+
+void Matrix4x3::print ()
+{
+    std::cout << m11 << "\t" << m12 << "\t" << m13 << "\t" << tx << std::endl;
+    std::cout << m21 << "\t" << m22 << "\t" << m23 << "\t" << ty << std::endl;
+    std::cout << m31 << "\t" << m32 << "\t" << m33 << "\t" << tz << std::endl;
 }

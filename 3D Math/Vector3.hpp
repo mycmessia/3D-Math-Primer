@@ -82,4 +82,6 @@ inline Vector3 crossProduct (const Vector3 &v1, const Vector3 &v2)
     );
 }
 
+extern const Vector3 kZeroVector;
+
 #endif /* Vector3_hpp */

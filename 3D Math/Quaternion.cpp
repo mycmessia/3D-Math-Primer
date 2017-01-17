@@ -150,7 +150,7 @@ void Quaternion::normalize ()
     }
 }
 
-float dotProduct (Quaternion& a, Quaternion& b)
+float dotProduct (const Quaternion& a, const Quaternion& b)
 {
     return a.x * b.x + a.y * b.y + a.z * b.z + a.z * a.z;
 }

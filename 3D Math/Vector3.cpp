@@ -6,10 +6,9 @@
 //  Copyright © 2016年 梅宇宸. All rights reserved.
 //
 
-#ifndef __VECTOR3_H_INCLUDED__
-#define __VECTOR3_H_INCLUDED__
-
 #include "3DMath.h"
+
+const Vector3 kZeroVector (0.0f, 0.0f, 0.0f);
 
 void Vector3::print ()
 {
@@ -49,6 +48,7 @@ Vector3 Vector3::operator /= (float a)
 void Vector3::normalize ()
 {
     float magSq = x*x + y*y + z*z;
+    
     if (magSq > 0.0f)
     {
         float n = 1.0f / sqrt (magSq);
@@ -89,5 +89,3 @@ float Vector3::operator * (const Vector3 &v) const
 {
     return x * v.x + y * v.y + z * v.z;
 }
-
-#endif

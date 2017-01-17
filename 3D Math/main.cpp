@@ -31,22 +31,40 @@ public:
     float Radius;
 };
 
+// 计算最佳平面，使得数组中尽可能多的点落在平面上
+// Calc the normal of best fit plane make sure most points are in the plane
+Vector3 CalcBestFitNormal (const Vector3 a[], int n)
+{
+    Vector3 result = kZeroVector;
+    
+    const Vector3* p = &a[n - 1];
+    
+    for (int i = 0; i < n; i++)
+    {
+        const Vector3 *c = &a[i];
+        
+        result.x += (p->z + c->z) * (p->y - c->y);
+        result.y += (p->x + c->x) * (p->z - c->z);
+        result.z += (p->y + c->y) * (p->x - c->x);
+        
+        p = c;
+    }
+    
+    result.normalize();
+    
+    return result;
+}
+
 int main(int argc, const char * argv[])
 {
-    RotationMatrix m (EulerAngle(30, 0, 0));
+    Matrix3x3 m;
     
-//    m.m11 = 0.866f; m.m12 = 0.0f;   m.m13 = -0.5f;
-//    m.m21 = 0.0f;   m.m22 = 1.0f;   m.m23 = 0.0f;
-//    m.m31 = 0.5f;   m.m32 = 0.0f;   m.m33 = 0.866f;
+    m.m11 = 10;
+    m.m22 = 20;
+    m.m33 = 30;
     
-    Vector3 v1(10, 20, 30);
-    Vector3 v2;
-    
-    v2 = m.inertial2Object(v1);
-    v2.print();
-    
-    v2 = m.object2Inertial(v1);
-    v2.print();
+    m.print ();
+    inverse (m).print ();
     
     return 0;
 }
